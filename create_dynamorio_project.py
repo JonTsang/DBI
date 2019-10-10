@@ -40,6 +40,7 @@ def clone_project(client_name, arch):
     src_project = os.path.join(pwd, "MyDynamoRIO_32")
   if arch == 64:
     src_project = os.path.join(pwd, "MyDynamoRIO_64")
+  
   new_project = os.path.join(pwd, client_name)
 
   if(os.path.exists(new_project)):
@@ -51,10 +52,10 @@ def clone_project(client_name, arch):
 
 
 def main():	
-  parser = argparse.ArgumentParser(description='Create DynamoRIO Project')
+  parser = argparse.ArgumentParser(description='Create DynamoRIO VS Project')
   req = parser.add_argument_group('required arguments')
   req.add_argument('-p', '--project', dest='project_name', help='DynamoRIO VS Project Name', required=True)
-  req.add_argument('-a', '--arch', dest='arch', type=int, choices=[32, 64], help='x86 or x64', required=True)
+  req.add_argument('-a', '--arch', dest='arch', type=int, choices=[32, 64], help='Choose x32 or x64 project', required=True)
   args = parser.parse_args()
   clone_project(args.project_name, args.arch)
   print "DynamoRIO Project created: %s" % args.project_name
