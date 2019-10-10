@@ -34,9 +34,12 @@ def update_project_name(new_project, src_project, client_name):
     f.close()
 
 
-def clone_project(client_name):
+def clone_project(client_name, arch):
   pwd = os.getcwd()
-  src_project = os.path.join(pwd, "MyDynamoRIO")
+  if arch == 32:
+    src_project = os.path.join(pwd, "MyDynamoRIO_32")
+  if arch == 64:
+    src_project = os.path.join(pwd, "MyDynamoRIO_64")
   new_project = os.path.join(pwd, client_name)
 
   if(os.path.exists(new_project)):
@@ -50,10 +53,10 @@ def clone_project(client_name):
 def main():	
   parser = argparse.ArgumentParser(description='Create DynamoRIO Project')
   req = parser.add_argument_group('required arguments')
-  req.add_argument('-p', dest='project_name', action="store", help='DynamoRIO VS Project Name', required=True)
+  req.add_argument('-p', '--project', dest='project_name', help='DynamoRIO VS Project Name', required=True)
+  req.add_argument('-a', '--arch', dest='arch', type=int, choices=[32, 64], help='x86 or x64', required=True)
   args = parser.parse_args()
-  
-  clone_project(args.project_name)
+  clone_project(args.project_name, args.arch)
   print "DynamoRIO Project created: %s" % args.project_name
 
 
